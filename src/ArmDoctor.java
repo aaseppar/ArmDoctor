@@ -17,13 +17,13 @@ public class ArmDoctor {
             String[] subb = new String[listLength];
             for (int i = 0; i < listLength; i++) {
                 subb[i] = fileList.get(i).toString();
-                System.out.printf("Array subbInitArm[%d]=%s", i, subb[i]);
+                //System.out.printf("Array subbInitArm[%d]=%s", i, subb[i]);
                 System.out.println("\n");
             }
             String[][] sub = new String[listLength][];
             for (int i = 0; i < listLength; i++) {
                 sub[i] = subb[i].split(" ");
-                System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
+                //System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
 
             }
 
