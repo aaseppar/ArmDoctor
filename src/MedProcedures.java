@@ -9,31 +9,27 @@ public class MedProcedures {
     private static String id;
     public static HashMap<String, String> hmMedProcedures = new HashMap<>();
 
-    public static boolean initMedProcedures() throws IOException {
-        Path path = Paths.get("MedProcedures.txt");
+    public static boolean initMedProcedures(String fileName) throws IOException {
+        String [] MedProceduresArray;
+        Path path = Paths.get(fileName);
         if ((Files.exists(path) == true)) {
-            ArrayList fileList = ArmDoctor.getList(path.toString());
-            int listLength = fileList.size();
-            String[] subb = new String[listLength];
-            for (int i = 0; i < listLength; i++) {
-                subb[i] = fileList.get(i).toString();
-                System.out.printf("Array subb[%d]=%s", i, subb[i]);
-                System.out.println("\n");
-            }
-            String[][] sub = new String[listLength][];
-            for (int i = 0; i < listLength; i++) {
-                sub[i] = subb[i].split(" ");
-                System.out.printf("Array sub[%d]= %s", i, Arrays.toString(sub[i]));
+            MedProceduresArray=ArmDoctor.getStringArrayFromFile(fileName);
+            String[][] sub = new String[MedProceduresArray.length][];
+            for (int i = 0; i < MedProceduresArray.length; i++) {
+                sub[i] = MedProceduresArray[i].split(" ");
+                System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
 
             }
-            StringBuilder[] strbArr=new StringBuilder[listLength];
-            for (int j = 0; j < listLength; j++) {
+
+            StringBuilder strbArr[]=new StringBuilder[sub.length];
+            for (int j = 0; j < sub.length; j++) {
                 strbArr[j]=new StringBuilder();
             }
 
-            for (int j = 0; j < listLength; j++) {
+            for (int j = 0; j < sub.length; j++) {
                 for (int i = 0,k=1;i < sub[j].length-1; i++,k++) {
                     strbArr[j].append(sub[j][k]+" ");
+
                 }
                 hmMedProcedures.put(sub[j][0],strbArr[j].toString());
 
@@ -45,19 +41,24 @@ public class MedProcedures {
                 System.out.println(m.getKey()+" "+m.getValue());
             }
 
+
+            return true;
         }
         else{
             Files.createFile(path);
+            return true;
         }
-        return true;
+
     }
 
     public static boolean writeProcedures() throws IOException {
         String procedures;
+        Scanner sc=new Scanner(System.in);
+        Scanner scl=new Scanner(System.in);
         int idOk=0;
           while(idOk==0){
             System.out.println("\n\nВведите id пациента");
-            id= ArmDoctor.sc.next();
+            id= sc.next();
             id=Patient.CheckExistPatient(id);
             if(id==null){
                 return false;
@@ -68,7 +69,7 @@ public class MedProcedures {
             else idOk=1;
         }
         System.out.println("\nВведите назначенные процедуры пациента");
-        procedures=ArmDoctor.sc.next();
+        procedures=scl.nextLine();
         hmMedProcedures.put(id,procedures);
         StringBuilder strb=new StringBuilder();
         for(Map.Entry m: hmMedProcedures.entrySet())

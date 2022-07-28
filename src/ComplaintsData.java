@@ -9,31 +9,27 @@ public class ComplaintsData {
     private static String id;
      public static HashMap<String, String> hmComplaints = new HashMap<>();
 
-    public static boolean initComplaints() throws IOException {
-        Path path = Paths.get("Complaints.txt");
+    public static boolean initComplaints(String fileName) throws IOException {
+        Path path = Paths.get(fileName);
+        String []  ComplaintsArray;
         if ((Files.exists(path) == true)) {
-            ArrayList fileList = ArmDoctor.getList(path.toString());
-            int listLength = fileList.size();
-            String[] subb = new String[listLength];
-            for (int i = 0; i < listLength; i++) {
-                subb[i] = fileList.get(i).toString();
-                System.out.printf("Array Complaints[%d]=%s", i, subb[i]);
-                System.out.println("\n");
-            }
-            String[][] sub = new String[listLength][];
-            for (int i = 0; i < listLength; i++) {
-                sub[i] = subb[i].split(" ");
-                System.out.printf("Array subComplaints[%d]= %s", i, Arrays.toString(sub[i]));
+            ComplaintsArray=ArmDoctor.getStringArrayFromFile(fileName);
+            String[][] sub = new String[ComplaintsArray.length][];
+            for (int i = 0; i < ComplaintsArray.length; i++) {
+                sub[i] = ComplaintsArray[i].split(" ");
+                System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
 
             }
-            StringBuilder[] strbArr=new StringBuilder[listLength];
-            for (int j = 0; j < listLength; j++) {
+
+            StringBuilder strbArr[]=new StringBuilder[sub.length];
+            for (int j = 0; j < sub.length; j++) {
                 strbArr[j]=new StringBuilder();
             }
 
-            for (int j = 0; j < listLength; j++) {
+            for (int j = 0; j < sub.length; j++) {
                 for (int i = 0,k=1;i < sub[j].length-1; i++,k++) {
                     strbArr[j].append(sub[j][k]+" ");
+
                 }
                 hmComplaints.put(sub[j][0],strbArr[j].toString());
 
@@ -44,6 +40,7 @@ public class ComplaintsData {
             {
                 System.out.println(m.getKey()+" "+m.getValue());
             }
+            return true;
         }
         else{
             Files.createFile(path);
@@ -51,12 +48,14 @@ public class ComplaintsData {
         return true;
     }
 
-    public static boolean writeComplaints() throws IOException {
-        String complaints;
+    public static boolean writeComplaints(int flag) throws IOException {
+        StringBuilder complaints=new StringBuilder();
+        Scanner sc=new Scanner(System.in);
+        Scanner scl=new Scanner(System.in);
         int idOk=0;
         while(idOk==0){
             System.out.println("\n\nВведите id пациента");
-            id= ArmDoctor.sc.next();
+            id= sc.next();
             id=Patient.CheckExistPatient(id);
             if(id==null){
                 return false;
@@ -66,9 +65,21 @@ public class ComplaintsData {
             }
             else idOk=1;
         }
-         System.out.println("\n\nВведите жалобы пациента");
-         complaints=ArmDoctor.sc.next();
-         hmComplaints.put(id,complaints);
+         System.out.println("\nВведите жалобы пациента");
+         complaints.append(scl.nextLine());
+         if(complaints.equals("нет")){
+             ArmDoctor.flagCloseSickList=1;
+         }
+         else {
+           if(flag==1){
+              hmComplaints.put(id,complaints.toString());
+           }
+           if(flag==2){
+             System.out.println("\nВведите название больницы для пациента");
+             complaints.append(scl.nextLine());
+             hmComplaints.put(id,complaints.toString());
+           }
+         }
          StringBuilder strb=new StringBuilder();
          for(Map.Entry m: hmComplaints.entrySet())
          {

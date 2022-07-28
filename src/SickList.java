@@ -5,10 +5,7 @@ import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SickList {
     private static String id;
@@ -30,33 +27,28 @@ public class SickList {
         this.secDateReception=secDateReception;
     }
 
-    public static boolean initSickLists() throws IOException {
-        Path path = Paths.get("SickLists.txt");
+    public static boolean initSickLists(String fileName) throws IOException {
+        String [] SickArray;
+        Path path = Paths.get(fileName);
 
         if ((Files.exists(path) == true)) {
-            ArrayList fileList = ArmDoctor.getList(path.toString());
-            int listLength = fileList.size();
-            String[] subb = new String[listLength];
-            for (int i = 0; i < listLength; i++) {
-                subb[i] = fileList.get(i).toString();
-                System.out.printf("Array subbInitSickLists[%d]=%s", i, subb[i]);
-                System.out.println("\n");
-            }
-            String[][] sub = new String[listLength][];
-            for (int i = 0; i < listLength; i++) {
-                sub[i] = subb[i].split(" ");
-                System.out.printf("Array subInitSickLists[%d]= %s", i, Arrays.toString(sub[i]));
+            SickArray=ArmDoctor.getStringArrayFromFile(fileName);
+            String[][] sub = new String[SickArray.length][];
+            for (int i = 0; i < SickArray.length; i++) {
+                sub[i] = SickArray[i].split(" ");
+                System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
 
             }
 
-            StringBuilder[] strbArr=new StringBuilder[listLength];
-            for (int j = 0; j < listLength; j++) {
+            StringBuilder strbArr[]=new StringBuilder[sub.length];
+            for (int j = 0; j < sub.length; j++) {
                 strbArr[j]=new StringBuilder();
             }
 
-            for (int j = 0; j < listLength; j++) {
+            for (int j = 0; j < sub.length; j++) {
                 for (int i = 0,k=1;i < sub[j].length-1; i++,k++) {
                     strbArr[j].append(sub[j][k]+" ");
+
                 }
                 SickLists.put(sub[j][0],strbArr[j].toString());
 
@@ -67,20 +59,19 @@ public class SickList {
             {
                 System.out.println(m.getKey()+" "+m.getValue());
             }
-
+            return true;
         }
-        else{
-            Files.createFile(path);
-        }
-        return true;
+        Files.createFile(path);
+     return true;
     }
 
     static boolean writeSickList() throws IOException {
         int idOk=0;
+        Scanner sc=new Scanner(System.in);
 
         while(idOk==0){
             System.out.println("\n\nВведите id пациента");
-            id= ArmDoctor.sc.next();
+            id= sc.next();
             id=Patient.CheckExistPatient(id);
             if(id==null){
                 return false;
@@ -91,16 +82,18 @@ public class SickList {
             else idOk=1;
         }
 
-        System.out.println("\n\nВведите название страховой компании пациента");
-        insuranceCompanyName= ArmDoctor.sc.next();
-        System.out.println("\n\nВведите дату открытия больничного листа");
-        sickListDateFrom= ArmDoctor.sc.next();
-        System.out.println("\n\nВведите дату закрытия больничного листа");
-        sickListDateTo= ArmDoctor.sc.next();
-        System.out.println("\n\nВведите предварительный диагноз");
-        premDiag= ArmDoctor.sc.next();
-        System.out.println("\n\nВведите дату следующего приема");
-        secDateReception= ArmDoctor.sc.next();
+        System.out.println("\nВведите название страховой компании пациента");
+        insuranceCompanyName= sc.nextLine();
+        System.out.println("\nВведите дату открытия больничного листа");
+        sickListDateFrom= sc.nextLine();
+        if(ArmDoctor.flagCloseSickList==1){
+        System.out.println("\nВведите дату закрытия больничного листа");
+        sickListDateTo= sc.nextLine();
+        }
+        System.out.println("\nВведите предварительный диагноз");
+        premDiag= sc.nextLine();
+        System.out.println("\nВведите дату следующего приема");
+        secDateReception= sc.nextLine();
 
         SickList patSickList=new SickList(id,insuranceCompanyName,sickListDateFrom,sickListDateTo,premDiag,secDateReception);
         StringBuilder strb=new StringBuilder();
