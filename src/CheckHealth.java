@@ -44,7 +44,7 @@ public class CheckHealth {
             String[][] sub = new String[HealthArray.length][];
             for (int i = 0; i < HealthArray.length; i++) {
                 sub[i] = HealthArray[i].split(" ");
-                System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
+                //System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
 
             }
 
@@ -62,11 +62,11 @@ public class CheckHealth {
 
             }
 
-            System.out.println("\n\n");
-            for(Map.Entry m: checkHealth.entrySet())
-            {
-                System.out.println(m.getKey()+" "+m.getValue());
-            }
+//            System.out.println("\n\n");
+//            for(Map.Entry m: checkHealth.entrySet())
+//            {
+//                System.out.println(m.getKey()+" "+m.getValue());
+//            }
             return true;
 
 
@@ -82,6 +82,7 @@ public class CheckHealth {
         int idOk=0;
         Scanner sc=new Scanner(System.in);
         Scanner scl=new Scanner(System.in);
+        Patient.getListIdPatient();
          while(idOk==0){
          System.out.println("\n\nВведите id пациента");
          id= sc.next();

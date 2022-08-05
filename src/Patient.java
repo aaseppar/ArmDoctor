@@ -30,7 +30,7 @@ public class Patient {
             String[][] sub = new String[PatientArray.length][];
             for (int i = 0; i < PatientArray.length; i++) {
                 sub[i] = PatientArray[i].split(" ");
-                System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
+                //System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
             }
 
             StringBuilder strbArr[]=new StringBuilder[sub.length];
@@ -47,11 +47,11 @@ public class Patient {
 
             }
 
-            System.out.println("\n\n");
-            for(Map.Entry m: Patients.entrySet())
-            {
-                System.out.println(m.getKey()+" "+m.getValue());
-            }
+//            System.out.println("\n\n");
+//            for(Map.Entry m: Patients.entrySet())
+//            {
+//                System.out.println(m.getKey()+" "+m.getValue());
+//            }
 
 
             return true;
@@ -66,6 +66,7 @@ public class Patient {
         String id = null;
         Scanner sc=new Scanner(System.in);
         Scanner scl=new Scanner(System.in);
+        getListIdPatient();
         while(idOk==0){
         System.out.println("\n\nВведите id пациента");
         id= sc.next();
@@ -113,9 +114,20 @@ public class Patient {
         return;
     }
 
+
+    public static String getListIdPatient(){
+        if(!Patient.Patients.isEmpty()) {
+            System.out.println("\nСписок пациентов для справки:\n");
+            for (Map.Entry m : Patients.entrySet()) {
+                System.out.println(m.getKey() + " " + Arrays.stream((m.getValue().toString()).split(" ")).findFirst());
+            }
+        }
+        return null;
+    }
+
     public static String CheckExistPatient(String id){
           if(!Patient.Patients.isEmpty()){
-            if(Patient.Patients.containsKey(id)){
+             if(Patient.Patients.containsKey(id)){
               System.out.println("id найден успешно!");
               return id;
                 } else {

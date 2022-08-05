@@ -36,7 +36,7 @@ public class SickList {
             String[][] sub = new String[SickArray.length][];
             for (int i = 0; i < SickArray.length; i++) {
                 sub[i] = SickArray[i].split(" ");
-                System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
+                //System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
 
             }
 
@@ -54,11 +54,11 @@ public class SickList {
 
             }
 
-            System.out.println("\n\n");
-            for(Map.Entry m: SickLists.entrySet())
-            {
-                System.out.println(m.getKey()+" "+m.getValue());
-            }
+//            System.out.println("\n\n");
+//            for(Map.Entry m: SickLists.entrySet())
+//            {
+//                System.out.println(m.getKey()+" "+m.getValue());
+//            }
             return true;
         }
         Files.createFile(path);
@@ -68,7 +68,7 @@ public class SickList {
     static boolean writeSickList() throws IOException {
         int idOk=0;
         Scanner sc=new Scanner(System.in);
-
+        Patient.getListIdPatient();
         while(idOk==0){
             System.out.println("\n\nВведите id пациента");
             id= sc.next();

@@ -14,12 +14,12 @@ public class ArmDoctor {
               if (Files.exists(path) == true) {
                   arnUsersArray=getStringArrayFromFile(fileName);
                   for(int i=0;i<arnUsersArray.length;i++){
-                  System.out.println("initArm"+arnUsersArray[i]);
+                 // System.out.println("initArm"+arnUsersArray[i]);
                   }
                 String[][] sub = new String[arnUsersArray.length][];
                 for (int i = 0; i < arnUsersArray.length; i++) {
                     sub[i] = arnUsersArray[i].split(" ");
-                    System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
+                   // System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
 
                 }
 
@@ -37,11 +37,11 @@ public class ArmDoctor {
 
                 }
 
-                System.out.println("\n\n");
-                for(Map.Entry m: hmarmUsers.entrySet())
-                {
-                    System.out.println("hmarmUsers :"+m.getKey()+" "+m.getValue());
-                }
+//                System.out.println("\n\n");
+//                for(Map.Entry m: hmarmUsers.entrySet())
+//                {
+//                    System.out.println("hmarmUsers :"+m.getKey()+" "+m.getValue());
+//                }
 
                 return true;
             }
@@ -100,6 +100,7 @@ public class ArmDoctor {
         Scanner sc=new Scanner(System.in);
          int idOk=0;
          String id="";
+         Patient.getListIdPatient();
          while(idOk==0){
              System.out.println("\n\nВведите id пациента");
              id= sc.next();
@@ -223,13 +224,13 @@ public class ArmDoctor {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "KOI8_R"));
             StringBuilder strb= new StringBuilder();
-            System.out.printf("\ngetStringArrayFromFile(): Length of file=%s is %d \n",fileName,myFile.length());
+            //System.out.printf("\ngetStringArrayFromFile(): Length of file=%s is %d \n",fileName,myFile.length());
             for (int i = 0; i < myFile.length(); i++) {
                 strb.append((char)br.read());
             }
             br.close();
             localStringArray= (strb.toString().split("\n"));
-            System.out.printf("\ngetStringArrayFromFile(): Contents of file=%s is %s \n",fileName,strb);
+            //System.out.printf("\ngetStringArrayFromFile(): Contents of file=%s is %s \n",fileName,strb);
             return localStringArray;
         }
 

@@ -17,7 +17,7 @@ public class ComplaintsData {
             String[][] sub = new String[ComplaintsArray.length][];
             for (int i = 0; i < ComplaintsArray.length; i++) {
                 sub[i] = ComplaintsArray[i].split(" ");
-                System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
+                //System.out.printf("Array subInitArm[%d]= %s", i, Arrays.toString(sub[i]));
 
             }
 
@@ -35,11 +35,11 @@ public class ComplaintsData {
 
             }
 
-            System.out.println("\n\n");
-            for(Map.Entry m: hmComplaints.entrySet())
-            {
-                System.out.println(m.getKey()+" "+m.getValue());
-            }
+//            System.out.println("\n\n");
+//            for(Map.Entry m: hmComplaints.entrySet())
+//            {
+//                System.out.println(m.getKey()+" "+m.getValue());
+//            }
             return true;
         }
         else{
@@ -53,6 +53,7 @@ public class ComplaintsData {
         Scanner sc=new Scanner(System.in);
         Scanner scl=new Scanner(System.in);
         int idOk=0;
+        Patient.getListIdPatient();
         while(idOk==0){
             System.out.println("\n\nВведите id пациента");
             id= sc.next();
